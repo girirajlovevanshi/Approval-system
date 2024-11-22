@@ -27,7 +27,12 @@ const userSchema = new mongoose.Schema({
 }
 );
 
-userSchema.pre('save', async (next)=>{
+// userSchema.pre('save', async (next)=>{
+//     if(! this.isModified('password')) return next();
+//     this.password = await bcrypt.hash(this.password, 10);
+//     next();
+// }) // need to use a regualr funcation , so this can point to the document
+userSchema.pre('save', async function(next){
     if(! this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, 10);
     next();
@@ -36,3 +41,6 @@ userSchema.pre('save', async (next)=>{
 userSchema.methods.matchPassword = async (enteredPassword) => {
     return await bcrypt.compare(enteredPassword, this.password);
 };
+
+const User = mongoose.model('User', userSchema);
+export default User;
