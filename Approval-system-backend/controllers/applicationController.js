@@ -10,8 +10,8 @@ export const createApplication = async (req,res)=>{
         const application = await Application.create({
             applicant: req.user._id,
             resume,
-            status: "panding",
-            currentStage: 'reviewer1',
+            status: "Pending",
+            currentStage: 'Reviewer 1', //enum values must be same else getting errors
         })
         res.status(201).json(application);
     } catch (error) {
