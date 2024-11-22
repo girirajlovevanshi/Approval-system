@@ -26,9 +26,11 @@ export const registerUser = async (req, res) =>{
 
 //login User
 
-export const loginUser= async ()=>{
+export const loginUser= async (req,res)=>{
     const {email, password} = req.body ;
     try {
+        const user = await User.findOne({ email });
+
         if( user && (await user.matchPassword(password))){
             res.json({
                 _id: user.id,
@@ -37,6 +39,8 @@ export const loginUser= async ()=>{
                 role: user.role,
                 token: genrateToken(user.id),
             })
+        }else{
+            res.status(401).json({ message: 'Invalid email or password' });
         }
         
     } catch (error) {
