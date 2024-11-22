@@ -6,6 +6,6 @@ const router = express.Router();
 //Routes
 
 router.post('/register', registerUser)
-router.post('/login', loginUser)
+router.post('/login', loginUser) // login route
 
 export default router;
