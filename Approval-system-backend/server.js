@@ -12,9 +12,9 @@ const PORT = process.env.PORT ;
 
 connectDB();
 
-app.use(cors({ origin: 'http://localhost:3000' }));
 const app = express();
 
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use(express.json()); //parser 
 

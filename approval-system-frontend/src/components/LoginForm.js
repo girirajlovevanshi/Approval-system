@@ -10,12 +10,20 @@ const LoginForm = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        console.log('Email:', email); // Log email
+        console.log('Password:', password); // Log password
         try {
-            const response = await api.post('/auth/login', { email, password });
+            const response = await api.post('/auth/login', { 
+                email,
+                password,
+            });
+            console.log('Response:', response.data); // Log response
             localStorage.setItem('authToken', response.data.token);
             localStorage.setItem('userRole', response.data.role);
             navigate('/dashboard');
         } catch (error) {
+            // Log the entire error object to debug
+            console.error('Error during login:', error);
             alert(error.response?.data?.message || "error occurred during login.");
         }
     };
