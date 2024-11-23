@@ -90,3 +90,50 @@ export const reviewApplication = async (req,res) =>{
         res.status(500).json({ message: error.message });
     }
 }
+
+//Application review by Approver
+export const approveApplication = async (req, res) => {
+    const { status, remark } = req.body; // can be Approved or Rejected
+
+    try {
+        const application = await Application.findById(req.params.id);
+
+        if (!application) {
+            return res.status(404).json({ message: 'Application not found' });
+        }
+
+        // need to ensure user is an approver
+        if (req.user.role !== 'Approver') {
+            return res.status(403).json({ message: 'Only approvers can  accress' });
+        }
+
+        // Ensuring that the application on approver stage
+        if (application.currentStage !== 'Approver') {
+            return res.status(400).json({ message: ' Application is not in the approver stage' });
+        }
+
+        // Adding the final remark
+        application.remarks.push({
+            reviewer: req.user._id,
+            remark,
+            status,
+        });
+
+        // Updating application status
+        if (status === 'Approved') {
+            application.status = 'Approved';
+        } else if (status === 'Rejected') {
+            application.status = 'Rejected';
+        } else {
+            return res.status(400).json({ message: 'Invalid status provided' });
+        }
+
+        // updated application
+        await application.save();
+
+        res.json(application);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
