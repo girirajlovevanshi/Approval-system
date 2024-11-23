@@ -1,5 +1,5 @@
 import express from 'express';
-import { createApplication, getApplicationById, reviewApplication, approveApplication } from '../controllers/applicationController.js';
+import { createApplication, getApplicationById, reviewApplication, approveApplication, getMyApplications } from '../controllers/applicationController.js';
 import { protect, authorize } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -12,5 +12,6 @@ router.patch('/:id/review', protect, authorize('reviewer'), reviewApplication); 
 
 router.patch('/:id/approve', protect, authorize('approver'), approveApplication);// for Approver, only Approver can Access
 
+router.get('/my-applications', protect, authorize('initiator'), getMyApplications);//get all applications
 
 export default router;

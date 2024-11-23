@@ -137,3 +137,20 @@ export const approveApplication = async (req, res) => {
     }
 };
 
+// Getting all applications for current initiator
+export const getMyApplications = async (req, res) => {
+    try {
+
+
+        // Finding applications submitted by the logged-in user
+        const applications = await Application.find({ applicant: req.user._id })
+            .populate('remarks.reviewer', 'name email role') // reviewer details in remarks
+            .sort({ createdAt: -1 }); // Sort by most recent
+
+        res.json(applications);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
