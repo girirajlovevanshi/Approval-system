@@ -1,4 +1,4 @@
-import Application from '../models/Application.js';
+import Application from '../models/application.js';
 import User from '../models/user.js';
 
 
@@ -23,16 +23,22 @@ export const createApplication = async (req,res)=>{
 
 export const getApplicationById = async (req, res) => {
     try {
-        const application = await Application.findById(req.params.id)
+        console.log('Authenticated User:', req.user);//debugging
+
+        // Role-based validation
+        if (req.user.role !== 'initiator') {
+            console.log('Unauthorized access attempt by:', req.user.role);
+            return res.status(403).json({ message: 'Access denied' });
+        }
+        const application = await Application.find({applicant: req.user._id})
             .populate('applicant', 'name email')
             .populate('remarks.reviewer', 'name email role'); 
 
-        if (!application) {
-            return res.status(404).json({ message: 'Application not found' });
-        }
+            console.log('Fetched Applications:', applications); // Debugging
 
         res.json(application);
     } catch (error) {
+        console.error('Error fetching applications:', error); // Debugging
         res.status(500).json({ message: error.message });
     }
 };
@@ -144,8 +150,8 @@ export const getMyApplications = async (req, res) => {
 
         // Finding applications submitted by the logged-in user
         const applications = await Application.find({ applicant: req.user._id })
-            .populate('remarks.reviewer', 'name email role') // reviewer details in remarks
-            .sort({ createdAt: -1 }); // Sort by most recent
+            //.populate('remarks.reviewer', 'name email role') // reviewer details in remarks
+            //.sort({ createdAt: -1 }); // Sort by most recent
 
         res.json(applications);
     } catch (error) {
