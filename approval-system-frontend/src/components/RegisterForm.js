@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 import '../App.css';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
         role: 'initiator',
     });
+    
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -56,6 +59,9 @@ const RegisterForm = () => {
                 <option value="approver">Approver</option>
             </select>
             <button type="submit">Register</button>
+            <br></br>
+            <p>Already Have an Account</p>
+            <button onClick={() => navigate('/')}>Login</button>
         </form>
     );
 };

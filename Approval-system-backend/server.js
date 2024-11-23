@@ -12,8 +12,8 @@ const PORT = process.env.PORT ;
 
 connectDB();
 
-const app = express();
 app.use(cors({ origin: 'http://localhost:3000' }));
+const app = express();
 
 
 app.use(express.json()); //parser 

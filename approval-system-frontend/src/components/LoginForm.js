@@ -11,9 +11,9 @@ const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await api.post('/auth/login', { email, password });
-            localStorage.setItem('authToken', data.token);
-            localStorage.setItem('userRole', data.role);
+            const response = await api.post('/auth/login', { email, password });
+            localStorage.setItem('authToken', response.data.token);
+            localStorage.setItem('userRole', response.data.role);
             navigate('/dashboard');
         } catch (error) {
             alert(error.response?.data?.message || "error occurred during login.");
