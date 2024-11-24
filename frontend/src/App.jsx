@@ -1,30 +1,17 @@
-import { useState, useEffect } from 'react'
+import React from 'react';
 import './App.css'
-import api from './services/api';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import RegisterForm from './components/RegisterForm';
 
-const App = () => {
-    const [message, setMessage] = useState('');
+function App() {
 
-    useEffect(() => {
-        const fetchMessage = async () => {
-            try {
-                const response = await api.get('/test'); // Fetch from backend
-                setMessage(response.data.message);
-            } catch (error) {
-                console.error('Error fetching message:', error);
-                setMessage('Error connecting to the backend');
-            }
-        };
+  return (
+    <Router>
+        <Routes>
+            <Route path="/" element={<RegisterForm />} />
+        </Routes>
+    </Router>
+  )
+}
 
-        fetchMessage();
-    }, []);
-
-    return (
-        <div>
-            <h1>Frontend-Backend Connection Test</h1>
-            <p>{message}</p>
-        </div>
-    );
-};
-
-export default App;
+export default App
