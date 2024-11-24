@@ -1,3 +1,4 @@
 //this file shows what a .env file contain for this proejct
 DB_URL = //mongodb uri
 PORT = //port no
+JWT_SECRET = //JWT_SECRET

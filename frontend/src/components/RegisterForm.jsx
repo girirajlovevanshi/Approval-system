@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../services/api.js';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
     const [formData, setFormData] = useState({
@@ -23,6 +24,7 @@ const RegisterForm = () => {
             setMessage(error.response?.data?.message || 'Registration failed.');
         }
     };
+    const navigate = useNavigate();
 
     return (
         <div>
@@ -61,6 +63,8 @@ const RegisterForm = () => {
                 <button type="submit">Register</button>
             </form>
             {message && <p>{message}</p>}
+            <p>already have an account</p>
+            <button onClick={() => navigate('/login')} >Login</button>
         </div>
     );
 };
