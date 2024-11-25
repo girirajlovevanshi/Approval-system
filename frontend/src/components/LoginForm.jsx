@@ -42,7 +42,7 @@ const LoginForm = () => {
                 <button type="submit">Login</button>
             </form>
             {message && <p>{message}</p>}
-            <p>already have an account</p>
+            <p>Don't have an account</p>
             <button onClick={() => navigate('/')} >SignUp</button>
         </div>
         

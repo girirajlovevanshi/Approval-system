@@ -17,7 +17,7 @@ export const registerUser = async(req, res)=>{
 
     //Creating a new user
     const user = await User.create({ name, email, password, role})
-    res.status(201).json({message: "User Registration done successfully"})
+    res.status(201).json({message: "User Registration done successfully, Login Now"})
     } catch (error) {
         res.status(500).json({message: "Error During Registration"})
     }

@@ -9,8 +9,8 @@ const RegisterForm = () => {
         password: '',
         role: 'initiator', // Default role
     });
-    const [message, setMessage] = useState('');
-
+    const [message, setMessage] = useState('Already Have an account');
+    
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -62,8 +62,7 @@ const RegisterForm = () => {
                 <br></br>
                 <button type="submit">Register</button>
             </form>
-            {message && <p>{message}</p>}
-            <p>already have an account</p>
+            {message && <p>{message}</p>}  {/* message */}
             <button onClick={() => navigate('/login')} >Login</button>
         </div>
     );
