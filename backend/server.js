@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectDB from './config/db.js';
 import testRoutes from './routes/testRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/authRoutes.js';
 
 // env varaible loading
 dotenv.config({path:'./config/.env'})
@@ -21,6 +22,7 @@ connectDB();
 //Routes
 app.use('/api/test', testRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/user', userRoutes)
 
 // Starting server
 const PORT = process.env.PORT
